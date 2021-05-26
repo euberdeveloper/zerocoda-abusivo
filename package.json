@@ -4,7 +4,9 @@
   "description": "A bot that reserves a vaccine for who lives in VENETO",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "transpile": "tsc",
+    "start": "node dist/main",
+    "serve": "npm run transpile && npm start"
   },
   "keywords": [
     "vaccino",

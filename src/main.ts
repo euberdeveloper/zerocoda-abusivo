@@ -23,7 +23,7 @@ async function askCodiceFiscale(ulss: string, codiceFiscale: string, lastNumTess
         const data: string = response.data;
 
         const matches = data.match(regexp);
-        if (matches) {
+        if (matches && matches.groups) {
             const sede = matches.groups.sede;
             logger.success('Wow, your codice fiscale is OK!!!', { sede })
             // DO WHAT YOU WANTTTTTTTTTTTTTTTTTT!!!!!!!!!!!!!!!!!!!!!
