@@ -89,10 +89,15 @@ function main() {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    // Create bull queue
+                    console.log({
+                        host: config_1.default.REDIS_HOST,
+                        port: +config_1.default.REDIS_PORT
+                    });
                     queue = new bullmq_1.Queue('jobs', {
                         connection: {
                             host: config_1.default.REDIS_HOST,
-                            port: +config_1.default.REDIS_PORT
+                            port: +config_1.default.REDIS_PORT,
                         }
                     });
                     _worker = new bullmq_1.Worker('jobs', function (job) { return __awaiter(_this, void 0, void 0, function () {

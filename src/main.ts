@@ -39,21 +39,24 @@ async function askCodiceFiscale(ulss: string, codiceFiscale: string, lastNumTess
 }
 
 async function main() {
+    // Instaniate connection object
+    const connection = {
+        host: CONFIG.REDIS_HOST,
+        port: +CONFIG.REDIS_PORT
+    };
+
     // Create bull queue
     const queue = new Queue('jobs', {
-        connection: {
-            host: CONFIG.REDIS_HOST,
-            port: +CONFIG.REDIS_PORT
-        }
+        connection
     });
 
     // Create bull worker
-    const _worker = new Worker('jobs', async (job: Job) => {
+    const _worker = new Worker('jobs', async (_job: Job) => {
         await askCodiceFiscale(CONFIG.ULSS, CONFIG.CODICE_FISCALE, CONFIG.LAST_NUM_TESSERA_SANITARIA);
-    });
+    }, { connection });
 
     // Create bull queue scheduler
-    const _queueScheduler = new QueueScheduler('jobs');
+    const _queueScheduler = new QueueScheduler('jobs', { connection });
 
     // Add jobs with cron
     const cron = CONFIG.CRON;
